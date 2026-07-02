@@ -1,0 +1,137 @@
+{
+  "model": "gemma4:26b Q4_K_M",
+  "measured_baseline": {
+    "gpu": "RTX A6000 48GB",
+    "tok_per_sec": 101.02,
+    "mem_bandwidth_gb_s": 768,
+    "n_runs": 15,
+    "stdev": 0.84,
+    "source": "KNU GPU cluster DIS06, 2026-06-04"
+  },
+  "estimation_model": "tok/s ≈ memory_bandwidth × 0.1315 (LLM is memory-bound)",
+  "price_basis": {
+    "date": "2026-06",
+    "source": "소비자급: 다나와 최저가/중고 시세(2026.6) 실확인 · 데이터센터급: 병행수입가 추정(변동 큼)",
+    "currency": "만원 (10K KRW)",
+    "note": "소비자급은 다나와/중고 실시세 확인, 데이터센터급은 병행수입 추정으로 변동 큼"
+  },
+  "gpus": [
+    {
+      "name": "RTX 4060 Ti 16GB",
+      "vram_gb": 16,
+      "mem_bw": 288,
+      "price_man_won": 60,
+      "kind": "estimated",
+      "tok_per_sec": 37.9,
+      "note": "엔트리 (VRAM 빠듯)"
+    },
+    {
+      "name": "RTX 3090 24GB",
+      "vram_gb": 24,
+      "mem_bw": 936,
+      "price_man_won": 110,
+      "kind": "estimated",
+      "tok_per_sec": 123.1,
+      "note": "중고, best value"
+    },
+    {
+      "name": "RTX 4070 Ti Super 16GB",
+      "vram_gb": 16,
+      "mem_bw": 672,
+      "price_man_won": 120,
+      "kind": "estimated",
+      "tok_per_sec": 88.4,
+      "note": "엔트리"
+    },
+    {
+      "name": "RTX 4090 24GB",
+      "vram_gb": 24,
+      "mem_bw": 1008,
+      "price_man_won": 350,
+      "kind": "estimated",
+      "tok_per_sec": 132.6,
+      "note": "소비자 최상(단종)"
+    },
+    {
+      "name": "L4 24GB",
+      "vram_gb": 24,
+      "mem_bw": 300,
+      "price_man_won": 350,
+      "kind": "estimated",
+      "tok_per_sec": 39.5,
+      "note": "데이터센터 입문"
+    },
+    {
+      "name": "RTX 5090 32GB",
+      "vram_gb": 32,
+      "mem_bw": 1792,
+      "price_man_won": 620,
+      "kind": "estimated",
+      "tok_per_sec": 235.7,
+      "note": "현세대 최상"
+    },
+    {
+      "name": "RTX A6000 48GB",
+      "vram_gb": 48,
+      "mem_bw": 768,
+      "price_man_won": 700,
+      "kind": "measured",
+      "tok_per_sec": 101.02,
+      "note": "KNU 실측"
+    },
+    {
+      "name": "RTX 6000 Ada 48GB",
+      "vram_gb": 48,
+      "mem_bw": 960,
+      "price_man_won": 1100,
+      "kind": "estimated",
+      "tok_per_sec": 126.3,
+      "note": "워크스테이션"
+    },
+    {
+      "name": "L40 48GB",
+      "vram_gb": 48,
+      "mem_bw": 864,
+      "price_man_won": 1300,
+      "kind": "estimated",
+      "tok_per_sec": 113.6,
+      "note": "서버용"
+    },
+    {
+      "name": "A100 40GB",
+      "vram_gb": 40,
+      "mem_bw": 1555,
+      "price_man_won": 1500,
+      "kind": "estimated",
+      "tok_per_sec": 204.5,
+      "note": "데이터센터 표준"
+    },
+    {
+      "name": "A100 80GB",
+      "vram_gb": 80,
+      "mem_bw": 2039,
+      "price_man_won": 3500,
+      "kind": "estimated",
+      "tok_per_sec": 268.2,
+      "note": "데이터센터 LL"
+    },
+    {
+      "name": "H100 PCIe 80GB",
+      "vram_gb": 80,
+      "mem_bw": 2000,
+      "price_man_won": 4500,
+      "kind": "estimated",
+      "tok_per_sec": 263.1,
+      "note": "최신 PCIe"
+    },
+    {
+      "name": "H100 SXM 80GB",
+      "vram_gb": 80,
+      "mem_bw": 3350,
+      "price_man_won": 6500,
+      "kind": "estimated",
+      "tok_per_sec": 440.6,
+      "note": "최신 SXM"
+    }
+  ]
+}

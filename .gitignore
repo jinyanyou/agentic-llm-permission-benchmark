@@ -1,0 +1,32 @@
+# --- 비밀/접속 정보 ---
+.env
+*.pem
+*.key
+
+# --- raw 실험 데이터 (요약 CSV/그래프만 공개) ---
+*.jsonl
+*.jsonl.*
+
+# --- 런타임/잡파일 ---
+*.db
+*.pid
+*.log
+*.bak
+*.bak*
+server.pid
+server.log
+
+# --- 파이썬 ---
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# --- OS/에디터 ---
+.DS_Store
+.idea/
+.vscode/
+
+# --- 인스턴스/캐시 ---
+instance/

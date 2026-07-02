@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>예약 목록 - 사내 호텔 예약 시스템</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; }
+        nav { margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">예약하기</a> | <a href="/bookings">예약 목록</a>
+        </nav>
+        <h1>📋 예약 목록</h1>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>예약자명</th>
+                    <th>사번</th>
+                    <th>객실</th>
+                    <th>체크인</th>
+                    <th>체크아웃</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.id }}</td>
+                    <td>{{ booking.guest_name }}</td>
+                    <td>{{ booking.employee_id }}</td>
+                    <td>{{ booking.room_name }}</td>
+                    <td>{{ booking.checkin_date }}</td>
+                    <td>{{ booking.checkout_date }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

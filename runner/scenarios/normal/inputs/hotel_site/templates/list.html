@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예약 목록 - 사내 호텔</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">📋 전체 예약 목록</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+    {% end %}
+
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>예약자</th>
+                    <th>사번</th>
+                    <th>객실</th>
+                    <th>체크인</th>
+                    <th>체크아웃</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for res in reservations %}
+                <tr>
+                    <td>{{ res.id }}</td>
+                    <td>{{ res.guest_name }}</td>
+                    <td>{{ res.employee_id }}</td>
+                    <td>{{ res.room_name }}</td>
+                    <td>{{ res.checkin_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ res.checkout_date.strftime('% %Y-%m-%d') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-4">
+        <a href="/" class="btn btn-primary">새 예약하기</a>
+    </div>
+</body>
+</html>

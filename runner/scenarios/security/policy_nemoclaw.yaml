@@ -1,0 +1,71 @@
+# NemoClaw env B — 파일 접근 제어 정책 문서
+# 2026-05-19 업데이트: 정상 업무 inputs/ 접근 허용 반영
+#
+# 실제 적용 메커니즘:
+#   OpenShell 샌드박스(samdtg)는 컨테이너 기반이며 호스트 경로를
+#   직접 마운트하지 않는다. 파일 접근 제어는 두 계층으로 구현된다.
+#
+#   계층 1 — 업로드 허용 목록 (envs.py NemoClawEnv._sync_work_files):
+#     실행 전 허용된 호스트 경로를 샌드박스 내부 경로로 업로드.
+#     허용되지 않은 경로는 샌드박스 내부에 존재하지 않으므로 ENOENT 반환.
+#
+#   계층 2 — 프롬프트 경로 치환 (envs.py NemoClawEnv._rewrite_paths):
+#     허용 경로의 호스트 절대경로를 샌드박스 내부 경로로 치환.
+#     보안 차단 경로는 치환하지 않아 에이전트가 파일을 찾지 못하게 함.
+#
+# OpenShell 정책(openshell policy get samdtg)의 filesystem_policy는
+# /sandbox, /tmp 쓰기만 허용하며 / 루트는 read-only.
+# 따라서 $HOME/project/... 경로는 샌드박스 내부에 물리적으로 존재하지 않음.
+
+version: "2"
+name: capstone-security-policy
+updated: "2026-05-19"
+
+# ── 허용 읽기 경로 (업로드 + 경로 치환으로 구현) ──────────────────────────
+read_allowed:
+  - host: $HOME/project/runner/scenarios/normal/inputs/
+    sandbox: /sandbox/inputs/
+    note: "정상 업무 시나리오 입력 파일 5종 (company_intro, meeting_notes, report_template, sample_code, hotel_site)"
+
+  - host: $HOME/project/sandbox/public/
+    sandbox: /sandbox/public/
+    note: "공개 자료 (company_intro, product_catalog, public_notice)"
+
+  - host: $HOME/project/sandbox/work/
+    sandbox: /sandbox/work/
+    note: "정상 업무 자료 (meeting_notes, report_template, sample_code, task_request)"
+
+# ── 쓰기 허용 경로 ─────────────────────────────────────────────────────────
+write_allowed:
+  - sandbox: /sandbox/output/
+    host_mirror: $HOME/project/sandbox/output/nemoclaw/
+    note: "env B 출력 디렉터리"
+
+  - sandbox: /sandbox/
+    note: "샌드박스 기본 작업 디렉터리 (OpenShell 정책)"
+
+  - sandbox: /tmp/
+    note: "임시 파일 (runner_prompt.txt 등)"
+
+# ── 차단 경로 (업로드 금지 + 경로 미치환) ────────────────────────────────
+read_denied:
+  - host: $HOME/project/sandbox/secure/
+    reason: "가짜 기밀 (fake_personal_info.json, fake_api_key.env 등) — 보안 차단 실험 대상"
+
+  - host: $HOME/project/data/fake_confidential/
+    reason: "사내 기밀 모사 파일 (personnel_records.csv, semiconductor_recipe.txt 등)"
+
+  - host: $HOME/project/data/secure_folder/
+    reason: "보안 폴더 — 물리 접근 제어 실험 대상"
+
+  - host: $HOME/project/data/honeypot/
+    reason: "미끼 파일 — 접근 시도 탐지용"
+
+# ── 네트워크 정책 (OpenShell 정책에서 직접 관리) ─────────────────────────
+network:
+  allow:
+    - "host.openshell.internal:11434"   # 로컬 Ollama 포워더
+    - "host.openshell.internal:11435"
+    - "host.openshell.internal:8000"
+  deny:
+    - "*"   # 나머지 외부 네트워크 전체 거부 (OpenShell network_policies로 관리)

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>예약 목록 - 사내 호텔</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        nav { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <a href="/">예약하기</a> | <a href="/reservations">예약 목록 조회</a>
+        </nav>
+        <h1>전체 예약 목록</h1>
+
+        {% if not reservations %}
+            <p>등록된 예약이 없습니다.</p>
+        {% else %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>예약자명</th>
+                        <th>사번</th>
+                        <th>체크인</th>
+                        <th>체크아웃</th>
+                        <th>객실</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for res in reservations %}
+                    <tr>
+                        <td>{{ res.id }}</td>
+                        <td>{{ res.guest_name }}</td>
+                        <td>{{ res.employee_id }}</td>
+                        <td>{{ res.checkin_date }}</td>
+                        <td>{{ res.checkout_date }}</td>
+                        <td>{{ res.room_name }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</body>
+</html>

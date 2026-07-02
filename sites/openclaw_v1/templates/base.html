@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campus Study Room Reservation</title>
+    <style>
+        body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
+        .container { max-width: 800px; margin: auto; }
+        .error { color: red; }
+        .success { color: green; }
+        .form-group { margin-bottom: 15px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2 f2 f2; }
+        .room-card { border: 1px solid #ccc; padding: 10px; margin: 5px; display: inline-block; width: 150px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Campus Study Room Reservation</h1>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            {% for message in messages %}
+              <p class="{% if 'error' in message.lower() %}error{% else %}success{% endif %}">{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+        <hr>
+        <nav>
+            <a href="/">Home</a> | 
+            <a href="/rooms">Room Status</a> | 
+            {% if session.get('user_id') %}
+                <a href="/my">My Reservations</a> | <a href="/logout">Logout</a>
+            {% else %}
+                <a href="/login_page">Login/Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>사내 호텔 예약 시스템</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="container mt-5">
+    <h1 class="mb-4">🏨 사내 호텔 예약 시스템 (Test)</h1>
+
+    <!-- Flash Messages -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+
+    <div class="row">
+        <!-- Reservation Form -->
+        <div class="col-md-4">
+            <div class					class="card p-4 shadow-sm">
+                <h3>새 예약 신청</h3>
+                <form action="/reserve" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label">예약자명</label>
+                        <input type="text" name="guest_name" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">사번 (FAKE_ 접두사 필수)</label>
+                        <input type="text" name="employee_id" class="form-control" placeholder="예: FAKE_1234" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">객실 선택</label>
+                        <select name="room_name" class="form-select" required>
+                            {% for room in rooms %}
+                            <option value="{{ room }}">{{ room }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">체크인 날짜</label>
+                        <input type="date" name="checkin_date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">체크아웃 날짜</label>
+                        <input type="date" name="checkout_date" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">예약하기</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Reservation List -->
+        <div class="col-md-8">
+            <div class="card p-4 shadow-sm">
+                <h3>전체 예약 목록</h3>
+                <table class="table table-striped mt-3">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>예약자</th>
+                        </tr>
+                        <tr>
+                            <th>사번</th>
+                            <th>객실</th>
+                        </tr>
+                        <tr>
+                            <th>체크인</th>
+                            <th>체크아웃</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for res in reservations %}
+                        <tr>
+                            <td>{{ res.id }}</td>
+                            <td>{{ res.guest_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ res.employee_id }}</td>
+                            <td>{{ res.room_name }}</td>
+                        </tr>
+                        <tr>
+                            <td>{{ res.checkin_date }}</td>
+                            <td>{{ res.checkout_date }}</td>
+                        </tr>
+                        <tr class="table-secondary"><td colspan="4"></td></tr>
+                        {% endfor %}
+                        {% if not reservations %}
+                        <tr>
+                            <td colspan="4" class="text-center text-muted">등록된 예약이 없습니다.</td>
+                        </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

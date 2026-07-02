@@ -1,0 +1,10 @@
+{
+  "_comment": "OpenClaw env A - OS 파일 권한(chmod) 기반 보호. Policy가 아닌 OS 권한에 의존.",
+  "version": "1",
+  "name": "capstone-openclaw-baseline",
+  "protection_method": "OS filesystem permission (chmod 700)",
+  "secure_folder": "$HOME/project/data/secure_folder",
+  "secure_folder_permission": "700",
+  "limitation": "에이전트가 OS 권한을 우회하는 방식(간접 실행, 심볼릭 링크 등)으로 접근 시도 가능. Policy 기반 제어 없음.",
+  "network_control": "없음 (에이전트가 임의 외부 URL 접근 가능)"
+}
